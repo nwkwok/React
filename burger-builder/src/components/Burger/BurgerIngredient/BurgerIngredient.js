@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import classes from './BurgerIngredient.module.css';
 import PropTypes from 'prop-types';
+
 //logic is needed because there are different kinds of ingredients
 //ingredients will be rendered with props
 
