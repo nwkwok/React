@@ -27,6 +27,7 @@ class NewPost extends Component {
             .then(response => {
                 console.log(response);
                 this.setState({submitted: true});
+                // this.props.history.push('/posts') -- can also be used
             })
     }
 
