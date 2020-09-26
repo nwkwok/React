@@ -33,3 +33,8 @@
     background-color: #fda49a;
 
 }
+
+.ValidationError { 
+    color: red;
+    margin: 5px 0; 
+}
