@@ -11,18 +11,11 @@ import { connect } from 'react-redux'
 import * as actionTypes from '../../store/actions'
 
 //global constants are typically placed in all caps
-const INGREDIENT_PRICES = {
-    salad: 0.5,
-    cheese: 0.4,
-    meat: 1.3,
-    bacon: 0.7
-}
 
 class BurgerBuilder extends Component {
 //Here we set the state for ingredients. 
 //Ingredients will be an object that holds key value pairs.
 state = {
-    totalPrice: 4,
     purchaseable: false,
     purchasing: false,
     loading: false,
@@ -74,41 +67,41 @@ updatePurchaseState (ingredients) {
         this.setState({purchaseable: sum > 0});
 }
 
-addIngredientHandler = (type) => {
-    const oldCount = this.state.ingredients[type];
-    const updatedCount = oldCount +1; 
-    const updatedIngredients = {
-        ...this.state.ingredients
-    };
-    updatedIngredients[type] = updatedCount;
+// addIngredientHandler = (type) => {
+//     const oldCount = this.state.ingredients[type];
+//     const updatedCount = oldCount +1; 
+//     const updatedIngredients = {
+//         ...this.state.ingredients
+//     };
+//     updatedIngredients[type] = updatedCount;
 
-    const priceAddition = INGREDIENT_PRICES[type];
-    const oldPrice = this.state.totalPrice;
-    const newPrice = oldPrice + priceAddition;
-    this.setState({totalPrice: newPrice, ingredients:updatedIngredients});
-    this.updatePurchaseState(updatedIngredients);
-}
+//     const priceAddition = INGREDIENT_PRICES[type];
+//     const oldPrice = this.state.totalPrice;
+//     const newPrice = oldPrice + priceAddition;
+//     this.setState({totalPrice: newPrice, ingredients:updatedIngredients});
+//     this.updatePurchaseState(updatedIngredients);
+// }
 
-removeIngredientHandler = (type) => {
-    const oldCount = this.state.ingredients[type];
-    if (oldCount <= 0) {
-        return;
-    }
+// removeIngredientHandler = (type) => {
+//     const oldCount = this.state.ingredients[type];
+//     if (oldCount <= 0) {
+//         return;
+//     }
 
-    const updatedCount = oldCount - 1; 
-    const updatedIngredients = {
-        ...this.state.ingredients
-    };
+//     const updatedCount = oldCount - 1; 
+//     const updatedIngredients = {
+//         ...this.state.ingredients
+//     };
 
-    updatedIngredients[type] = updatedCount;
+//     updatedIngredients[type] = updatedCount;
 
-    const priceDeduction = INGREDIENT_PRICES[type];
-    const oldPrice = this.state.totalPrice;
-    const newPrice = oldPrice - priceDeduction;
+//     const priceDeduction = INGREDIENT_PRICES[type];
+//     const oldPrice = this.state.totalPrice;
+//     const newPrice = oldPrice - priceDeduction;
     
-    this.setState({totalPrice: newPrice, ingredients:updatedIngredients});
-    this.updatePurchaseState(updatedIngredients);
-}
+//     this.setState({totalPrice: newPrice, ingredients:updatedIngredients});
+//     this.updatePurchaseState(updatedIngredients);
+// }
 
     render (){
         const disabledInfo = {
@@ -129,13 +122,13 @@ removeIngredientHandler = (type) => {
                     ingredientAdded={this.props.onIngredientAdded}
                     ingredientDeducted={this.props.onIngredientRemoved}
                     disabled={disabledInfo}
-                    price={this.state.totalPrice} 
+                    price={this.props.price} 
                     purchaseable={this.state.purchaseable}
                     ordered={this.purchaseHandler} />
             </Aux>
             );
             orderSummary = <OrderSummary 
-            price={this.state.totalPrice}
+            price={this.props.price}
             ingredients={this.props.ings} 
             purchaseCanceled={this.purchaseCancelHandler}
             purchaseContinued={this.purchaseContinueHandler}/>
@@ -161,7 +154,8 @@ removeIngredientHandler = (type) => {
 
 const mapStateToProps = state => {
     return {
-        ings: state.ingredients
+        ings: state.ingredients,
+        price: state.totalPrice
     }
 }
 const mapDispatchToProps = dispatch => {
