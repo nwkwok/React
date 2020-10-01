@@ -22,7 +22,6 @@ state = {
 }
 
 componentDidMount () {
-    console.log(this.props);
     this.props.onInitingredients();
 
 }
