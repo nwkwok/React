@@ -49,7 +49,7 @@ export const auth = (email, password, isSignup) => {
         };
         let url = null; // API URL
         if (!isSignup) {
-             url = null; // API URL
+             url = null; // API URL 
         }
         axios.post(url, authData)
             .then(response => {
