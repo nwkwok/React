@@ -13,6 +13,10 @@
     display: block;
 }
 
+.Error {
+    color: salmon;
+    font-weight: bold;
+}
 
 @media (min-width: 600px) {
     .Auth {

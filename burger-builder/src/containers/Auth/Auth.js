@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
 import Input from '../../components/UI/Input/Input';
 import classes from './Auth.module.css'
 import Button from '../../components/UI/Button/Button'
+import * as actions from '../../store/actions/index'
+import Spinner from '../../components/UI/Spinner/Spinner'
 
 class Auth extends Component {
     state = {
@@ -34,6 +38,13 @@ class Auth extends Component {
                 valid: false,
                 touched: false
             }
+        },
+        isSignup: true
+    }
+
+    componentDidMount(){
+        if (!this.props.buildingBurger && this.props.authRedirectPath !== '/') {
+            this.props.onSetAuthRedirectPath();
         }
     }
 
@@ -66,16 +77,36 @@ class Auth extends Component {
         this.setState({controls: updatedControls});
     }
 
+
+    submitHandler = (event) => {
+        event.preventDefault();
+        this.props.onAuth(
+            this.state.controls.email.value,
+            this.state.controls.password.value,
+            this.state.isSignup);
+    }
+
+    switchAuthModeHandler = () => {
+        this.setState(prevState => {
+            return {isSignup: !prevState.isSignup}
+        })
+    }
+
     render () {
         const formElementsArray = []
-        for (let key in this.state.controls) {
+        for (let key in this.state.controls) {  
+            // key is like key value pair -- so for every key (key: value)
+            // key would be email or password 
             formElementsArray.push({
                 id: key,
+                // you picked 'id' and setting the value to be key (email or password)
                 config: this.state.controls[key]
+                // you picked 'config' and set that value to be everything inside of the object 
+                // located at ['email'] or [password]
             });
         }
 
-        const form = formElementsArray.map(formElement => (
+        let form = formElementsArray.map(formElement => (
             <Input 
                 key={formElement.id}
                 invalid={!formElement.config.valid}
@@ -87,16 +118,54 @@ class Auth extends Component {
                 changed={(event) => this.inputChangedHandler(event, formElement.id)} />
  
             ) );
+
+            if (this.props.loading) {
+                form = <Spinner />
+            }
+
+            let errorMessage = null;
+            if (this.props.error) {
+                errorMessage = (
+                    <p className={classes.Error} >{this.props.error.message}</p>
+                )
+            }
+
+            let authRedirect = null;
+            if (this.props.isAuthenticated) {
+                authRedirect = <Redirect to={this.props.authRedirectPath} />
+            }
+
         return (
             <div className={classes.Auth}>
-                <form>
+                {authRedirect}
+                {errorMessage}
+                <form onSubmit={this.submitHandler}>
                     {form}
                     <Button btnType="Success">SUBMIT</Button>
                 </form>
+                <Button 
+                clicked={this.switchAuthModeHandler}
+                btnType="Danger">SWITCH TO {this.state.isSignup ? 'SIGN IN' : 'SIGN UP'}</Button>
             </div>
         )
     }
 }
 
+const mapStateToProps = state => {
+    return {
+        loading: state.auth.loading,
+        error: state.auth.error,
+        isAuthenticated: state.auth.token !== null,
+        buildingBurger: state.burgerBuilder.building,
+        authRedirectPath: state.auth.authRedirectPath
+    }
+}
 
-export default Auth; 
+const mapDispatchToProps = dispatch => {
+    return {
+        onAuth: (email, password, isSignup) => dispatch(actions.auth(email, password, isSignup)),
+        onSetAuthRedirectPath: () => dispatch(actions.setAuthRedirectPath('/'))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Auth); 

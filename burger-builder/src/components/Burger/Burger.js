@@ -11,19 +11,19 @@ const Burger = (props) => {
     //and place them into a new array
 
     let transformedIngredients = Object.keys(props.ingredients)
-    // transformedIngredients now = ["salad", "bacon", "cheese", "meat"]
+    // transformedIngredients now = ["lettuce", "bacon", "cheese", "meat"]
 
       .map(igKey => {
             return [...Array(props.ingredients[igKey])]
-            //if ingredients = {salad: 1, bacon: 1, cheese: 2, meat: 2}
+            //if ingredients = {lettuce: 1, bacon: 1, cheese: 2, meat: 2}
             //returns [], [], [ , ], [ , ] => These are four array created and inside is the empty amount
-            //of how many are represented in the object ingredients. (# of cheese, meat, salad and bacon)
+            //of how many are represented in the object ingredients. (# of cheese, meat, lettuce and bacon)
             
             .map((_, i) => {
             return <BurgerIngredient key={igKey + i} type={igKey} />
-            //if ingredients = {salad: 1, bacon: 1, cheese: 2, meat: 2}
-            //returns key = salad0, bacon0, cheese0, cheese1, meat0, meat1 
-            //returns type =  salad, bacon, cheese, cheese, meat, meat
+            //if ingredients = {lettuce: 1, bacon: 1, cheese: 2, meat: 2}
+            //returns key = lettuce0, bacon0, cheese0, cheese1, meat0, meat1 
+            //returns type =  lettuce, bacon, cheese, cheese, meat, meat
             }); 
         })
 
