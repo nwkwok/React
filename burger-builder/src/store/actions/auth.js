@@ -47,10 +47,11 @@ export const auth = (email, password, isSignup) => {
             password: password,
             returnSecureToken: true
         };
-        let url = null; // API URL
+        let url = null //API URL
         if (!isSignup) {
-             url = null; // API URL 
+             url = null //API URL
         }
+
         axios.post(url, authData)
             .then(response => {
                 const expirationDate = new Date(new Date().getTime() + response.data.expiresIn * 1000);
