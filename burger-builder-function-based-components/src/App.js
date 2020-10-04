@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, Suspense } from 'react';
 import './App.module.css';
 import Layout from './hoc/Layout/Layout'
 import BurgerBuilder from './containers/BurgerBuilder/BurgerBuilder'
@@ -9,6 +9,19 @@ import Auth from './containers/Auth/Auth'
 import Logout from './containers/Auth/Logout/Logout'
 import { connect } from 'react-redux'
 import * as actions from './store/actions/index'
+
+const Checkout = React.lazy(() => {
+  return 
+})
+
+const Orders = React.lazy(() => {
+  return 
+})
+
+const Auth = React.lazy(() => {
+  return 
+})
+
 
 const App = props => {
 
@@ -41,7 +54,7 @@ const App = props => {
     <div>
 
       <Layout>
-        {routes}
+        <Suspense fallback={<p>Loading...</p>}>{routes}</Suspense>
       </Layout>
 
     </div>
