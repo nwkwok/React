@@ -13,9 +13,12 @@ const Auth = props => {
   return (
     <div className="auth">
       <Card>
-        <h2>You are not authenticated!</h2>
-        <p>Please log in to continue.</p>
-        <button onClick={loginHandler}>Log In</button>
+        <h2>Nick's React Shopping List Web App!</h2>
+        <h3>Welcome!</h3>
+        <p>Add items</p>
+        <p>Remove items</p>
+        <p>Search if the list is too long :)</p>
+        <button onClick={loginHandler}>C'mon In!</button>
       </Card>
     </div>
   );
