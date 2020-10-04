@@ -13,7 +13,7 @@ const Auth = props => {
   return (
     <div className="auth">
       <Card>
-        <h2>Nick's React Shopping List Web App!</h2>
+        <h2>Nick's React Shopping List</h2>
         <h3>Welcome!</h3>
         <p>Add items</p>
         <p>Remove items</p>
