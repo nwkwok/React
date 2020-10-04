@@ -30,7 +30,11 @@ function Ingredients() {
     }
 
     const removeIngredientHandler = ingredientId => {
-      setIngredients(prevValue => prevValue.filter(ingredient => ingredient.id !== ingredientId))
+      fetch(`https://react-hooks-2e5ac.firebaseio.com/ingredients/${ingredientId}.json`, {
+        method: 'DELETE',
+        }).then(response => {
+          setIngredients(prevValue => prevValue.filter(ingredient => ingredient.id !== ingredientId))
+        })
     }
 
   return (
