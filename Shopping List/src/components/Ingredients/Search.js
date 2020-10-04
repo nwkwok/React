@@ -28,7 +28,7 @@ const Search = React.memo(props => {
       }
       onLoadIngredients(loadedIngredients)
       })
-    }, 2000);
+    }, 700);
     return () => { 
       clearTimeout(timer);
     };   
