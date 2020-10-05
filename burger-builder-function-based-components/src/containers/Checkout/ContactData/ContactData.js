@@ -10,7 +10,6 @@ import * as actions from '../../../store/actions/index'
 
 const ContactData = props => {
     const [orderForm, setOrderForm] = useState({
-        orderForm: {
             name: {
                 elementType: 'input',
                 elementConfig: {
@@ -90,8 +89,7 @@ const ContactData = props => {
                 validation: {},
                 valid: true  
             }  
-        }
-    })
+        })
 
     const [formIsValid, setFormIsValid] = useState(false)
 
@@ -149,7 +147,7 @@ const ContactData = props => {
                 formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid;
             }
         setFormIsValid(formIsValid)
-        setOrderForm({orderForm: updatedOrderForm, formIsValid: formIsValid});
+        setOrderForm(updatedOrderForm);
     }
         const formElementsArray = []
         for (let key in orderForm) {

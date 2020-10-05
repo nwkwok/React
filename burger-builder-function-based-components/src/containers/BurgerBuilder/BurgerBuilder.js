@@ -87,8 +87,7 @@ const updatePurchaseState = ingredients => {
                     {orderSummary}
                 </Modal>
                 {burger}
-
-                 
+                
             </Aux>
         )
     }
