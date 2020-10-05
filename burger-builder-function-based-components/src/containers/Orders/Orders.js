@@ -8,10 +8,12 @@ import axios from '../../axios-orders'
 
 const Orders = props => {
 
-    useEffect(() => { 
-        props.onFetchOrders(props.token, props.userId)
+const { onFetchOrders, token, userId } = props;
 
-    }, [])
+    useEffect(() => { 
+        onFetchOrders(token, userId)
+    }, [onFetchOrders]);
+
             let orders = <Spinner />;
             if (!props.loading) {
                 orders = props.orders.map(order => (
